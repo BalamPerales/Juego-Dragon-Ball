@@ -1,0 +1,199 @@
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Swal from 'sweetalert2';
+import Accionnes from "./Accionnes.js";
+import Personaje from './Personaje.js';
+
+const btn_player1 = document.getElementById("btn_player1");
+const btn_player2 = document.getElementById("btn_player2");
+let pj1="", pj2="";
+let jugador1, jugador2;
+
+const remover_seleccion = (...elementos) =>{
+    elementos.map((elemento)=>{
+        elemento.classList.remove("bg-warning");
+        elemento.classList.add("bg-danger");
+    });
+}
+const player1= document.getElementById("py1");
+[...player1.querySelectorAll("img")].map((imagen)=>{
+    imagen.addEventListener('click',(event=>{
+        remover_seleccion(...player1.querySelectorAll("img"));
+        event.target.classList.remove("bg-danger");
+        event.target.classList.add("bg-warning");
+        pj1=event.target.alt;
+    }));
+});
+
+btn_player1.addEventListener("click",()=>{
+    if(document.getElementById("player1").value==""){
+        Swal.fire({
+            icon:"warning",
+            title:"Error",
+            text:"Eljugador 1 no ha ingresado un nombre de usuario"
+        });
+        
+        return;
+    }else if(pj1==""){
+        Swal.fire({
+            icon:"warning",
+            title:"Error",
+            text:"Eljugador 1 debe seleccionar un personaje"
+        });
+        return;
+    }
+    jugador1= new Accionnes(document.getElementById("player1").value);
+    document.getElementById("player1").disabled=true;
+    document.getElementById("py1").classList.add("d-none");
+    
+    Swal.fire(`
+        Nombre usuario: ${document.getElementById("player1").value},
+        Personaje: ${pj1}
+    `);
+
+});
+
+//persoaje2
+const player2= document.getElementById("py2");
+[...player2.querySelectorAll("img")].map((imagen)=>{
+    imagen.addEventListener('click',(event=>{
+        remover_seleccion(...player2.querySelectorAll("img"));
+        event.target.classList.remove("bg-danger");
+        event.target.classList.add("bg-warning");
+        pj2=event.target.alt;
+    }));
+});
+
+btn_player2.addEventListener("click",()=>{
+    if(document.getElementById("player2").value==""){
+        Swal.fire({
+            icon:"warning",
+            title:"Error",
+            text:"Eljugador 2 no ha ingresado un nombre de usuario"
+        });
+        
+        return;
+    }else if(pj2==""){
+        Swal.fire({
+            icon:"warning",
+            title:"Error",
+            text:"El jugador 2 debe seleccionar un personaje"
+        });
+        return;
+    }
+    jugador1= new Accionnes(document.getElementById("player2").value);
+    document.getElementById("player2").disabled=true;
+    document.getElementById("py2").classList.add("d-none");
+    
+    Swal.fire(`
+        Nombre usuario: ${document.getElementById("player2").value},
+        Personaje: ${pj2}
+    `);
+
+});
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAGON BALL GAME</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Encabezado del titulo -->
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <h1 class="text-danger display-3"><i class="fa-brands fa-d-and-d"></i>DRAGON BALL GAME <i class="fa-brands fa-d-and-d"></i></h1>
+            </div>
+        </div>
+
+        <!-- Jugadores -->
+        <div class="row justify-content-around mt-4">
+
+            <!-- Player1 -->
+            <div class="col-md-5">
+                <div class="form-floating border border-danger rounded mb-3">
+                    <input type="text" id="player1" class="form-control" placeholder="Jugador1">
+                    <label for="player1">Jugador 1</label>
+                </div>
+            </div>
+
+            <!-- Player2 -->
+            <div class="col-md-5">
+            <div class="form-floating border border-primary rounded mb-3">
+                <input type="text" id="player2" class="form-control" placeholder="Jugador1">
+                <label for="player2">Jugador 2</label>
+            </div>
+
+        </div>
+
+        <!-- Seleccion dersonajes -->
+            <div class="row justify-content-around mt-3">
+                <div id="py1" class="col-md-6 text-center">
+                    <span class="text-danger">Selecciona tu personaje</span>
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/05.png" alt="Goku">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/01.png" alt="Veguitto">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/06.png" alt="Gohan">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/03.png" alt="Trunks">
+                        </div>
+
+                    </div>
+                    <button id="btn_player1" type="button" class="btn btn-outline-danger w-100 mt-4">Aceptar</button>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            +
+            <!-- Seleccion personaje2 -->
+             <div class="row justify-content-around mt-3">
+                <div id="py2" class="col-md-6 text-center">
+                    <span class="text-primary">Selecciona tu personaje</span>
+                    <div class="row mt-4">
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/02.png" alt="Veguetta">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/04.png" alt="Pikoro">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/07.png" alt="Gogueta">
+                        </div>
+
+                        <div class="col-3">
+                            <img class="img-fluid rounded-circle bg-danger border-danger" src="./public/img/seleccion/08.png" alt="Cell">
+                        </div>
+
+                    </div>
+                    <button id="btn_player2" type="button" class="btn btn-outline-primary w-100 mt-4">Aceptar</button>
+                </div>
+                <div class="col-md-6">
+                    <span class="text-primary text-center"></span>
+                </div>
+            </div>
+
+
+           
+    </div>  
+    
+    
+    
+</body>
+<script src="./bundle.js"></script>
+</html>
