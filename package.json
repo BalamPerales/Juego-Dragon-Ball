@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "plantilla basado en ES",
   "license": "MIT",
-  "author": "Adaly",
+  "author": "Balam",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
